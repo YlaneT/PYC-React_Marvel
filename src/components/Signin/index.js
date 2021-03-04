@@ -5,8 +5,10 @@ import {useHistory} from 'react-router-dom'
 
 const Form = () => {
 	const [formState, setFormState] = useState({username: '', password: ''})
+	const [errorMessage, setErrorMessage] = useState('')
+
 	// attention, si on n'utilise pas le spread Operator, on ne printera récupérera que le dernier champ modifié.
-	useEffect(()=> { console.log(formState)})
+	useEffect(()=> { console.log("formstate : ", formState)})
 
 	/* Hook permettant d'avoir accès à l'objet history de props même en dehors d'une page gérée par le router */
 	const history = useHistory();
@@ -27,12 +29,15 @@ const Form = () => {
 		
 		console.log("history : ", history);
 
-		evenement.preventDefault();
 		// prévient JS de ne pas utiliser le comportement de base, à savoir raffraichir la page
-		/* useEffect(() => {
-			console.log("username : ", username);
-			console.log("password : ", password);
-		}) */
+		evenement.preventDefault();
+
+		if (!formState.username || !formState.password) {
+			// Si à la validation, il manque le username ou password
+			setErrorMessage("Les champs ne doivent pas être vides");
+			return;
+		}
+
 		axios({
 				method: "POST",
 				url:'https://easy-login-api.herokuapp.com/users/login',
@@ -41,32 +46,16 @@ const Form = () => {
 					password: formState.password
 			}
 		}).then(res => {
-			console.log (res);
-			console.log (res.headers);
-			console.log(res.headers['x-access-token']);
+			/* console.log ("resultat : ", res);
+			console.log ("headers : ", res.headers);
+			console.log ("x-access-token : ", res.headers['x-access-token']); */
 			localStorage.setItem('token', res.headers['x-access-token']);
 			/* Redirige le user vers la page Characters */
 			history.push('/Characters')
 		}).catch(err => {
-			console.log("err : " , err)
+			setErrorMessage("une erreur est survenue, veuillez réessayer plus tard.")
 		})
 	}
-
-	// eslint-disable-next-line no-lone-blocks
-	{/* 
-		return (<form onSubmit={(e) => {
-				
-				e.preventDefault();
-			}}>
-				<label for="UN">Username : </label>
-				<input type="text" id="UN" name="UN"/>
-				<br/>
-				<label for="PW">Password : </label>
-				<input type="password" id="PW" name="PW"/>
-
-				<button type="submit">Login</button>			
-			</form>) 
-	*/}
 
 	return (
 		<div>
@@ -79,7 +68,7 @@ const Form = () => {
 
 				<StyledLabel for="PW">Password : </StyledLabel>
 				<StyledInput type="password" name="PW" onChange={e => setFormState({...formState, password : e.target.value})}></StyledInput>
-
+				<StyledError>{errorMessage}</StyledError>
 				<StyledSubmit type="submit" name="Submit">Sign in</StyledSubmit>
 			</StyledForm>
 		</div>
@@ -91,12 +80,14 @@ const Form = () => {
 
 
 const StyledTitle = styled.h2`
+	margin: 5px;
 	color: red;
 	text-transform: capitalize;
-	font-size:20px;
+	font-size:30px;
 `
 
 const StyledForm = styled.form`
+	margin: 5px;
 	display:flex;
 	flex-direction:column;
 	align-items:center;
@@ -104,12 +95,14 @@ const StyledForm = styled.form`
 `
 
 const StyledLabel = styled.label`
+	margin: 5px;
 	color: blue;
 	font-style:italic;
 	margin-top : 5px;
 `
 	
 const StyledInput = styled.input`
+	margin: 5px;
 	border: 2px orangered solid;
 	border-radius: 5px;
 	background-color : #334;
@@ -118,12 +111,24 @@ const StyledInput = styled.input`
 `
 
 const StyledSubmit = styled.button`
-	margin: 15px;
+	margin: 5px;
 	border-radius : 5px;
 	background-color : #334;
 	height: 30px;
 	width: 100px;
 	color : white;
+`
+
+const StyledError = styled.span`
+	width : 1000px;
+	border-radius : 20px;
+	padding : 10px;
+	margin: 15px;
+	background-color : rgba(50,0,25,0.7);
+	color : red;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size: 200%;
 `
 
 export default Form;
