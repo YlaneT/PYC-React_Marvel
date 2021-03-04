@@ -5,6 +5,7 @@ const Characters = () => {
 	return (
 		<div>
 			<NavBar/>
+			<h1>CHARACTERS</h1>
 			
 		</div>
 	);

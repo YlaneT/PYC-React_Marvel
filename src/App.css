@@ -5,13 +5,12 @@ html {
   background-position-x: center;
   background-position-y: 75px;
   height : 100%;
-  color: white;
 }
 
 .navbar {
   height:25px;
   background-color: #a00;
-
+  color: white;
 }
 .navbar > a {
   margin-left: 15px ;
