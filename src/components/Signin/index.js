@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 
 const Form = () => {
-	const [username,setUsername] = useState('');
-	const [password,setPassword] = useState('');
+	const [formState, setFormState] = useState({username: '', password: ''})
+	// attention, si on n'utilise pas le spread Operator, on ne printera récupérera que le dernier champ modifié.
+	useEffect(()=> { console.log(formState)})
 
 	/* Hook permettant d'avoir accès à l'objet history de props même en dehors d'une page gérée par le router */
 	const history = useHistory();
@@ -36,8 +37,9 @@ const Form = () => {
 				method: "POST",
 				url:'https://easy-login-api.herokuapp.com/users/login',
 				data: {
-					username: username,
-					password: password
+					username: formState.username,
+					password: formState.
+password
 			}
 		}).then(res => {
 			console.log (res);
@@ -73,10 +75,11 @@ const Form = () => {
 			<StyledForm onSubmit={submit} >
 			{/* if qui vérifie si les deux champs sont remplis*/}
 				<StyledLabel for="UN">Username : </StyledLabel>
-				<StyledInput type="text" name="UN" onChange={e => setUsername(e.target.value)}></StyledInput>
+			
+				<StyledInput type="text" name="UN" onChange={e => setFormState({...formState /* spread Operator */, username : e.target.value})}></StyledInput>
 
 				<StyledLabel for="PW">Password : </StyledLabel>
-				<StyledInput type="password" name="PW" onChange={e => setPassword(e.target.value)}></StyledInput>
+				<StyledInput type="password" name="PW" onChange={e => setFormState({...formState, password : e.target.value})}></StyledInput>
 
 				<StyledSubmit type="submit" name="Submit">Sign in</StyledSubmit>
 			</StyledForm>
