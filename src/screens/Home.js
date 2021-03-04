@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar"
 const Details = () => {
 	return (
 		<div>
-			<h1>DETAILS</h1>
+			<h1>HOME</h1>
 
 		</div>
 	);

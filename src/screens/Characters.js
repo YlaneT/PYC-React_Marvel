@@ -1,10 +1,10 @@
 import React from 'react'
 import NavBar from "../components/NavBar"
 
-const Characters = () => {
+const Characters = ({history}) => {
 	return (
 		<div>
-			<NavBar/>
+			
 			<h1>CHARACTERS</h1>
 			
 		</div>

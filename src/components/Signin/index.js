@@ -10,6 +10,10 @@ const Form = ({submit}) => {
 
 	/* Hook permettant d'avoir accès à l'objet history de props même en dehors d'une page gérée par le router */
 	const history = useHistory();
+	var errMsg = null;
+	if (errorMessage !== ''){
+		errMsg = <StyledError>{errorMessage}</StyledError>
+	}
 
 	return (
 		<div>
@@ -22,15 +26,12 @@ const Form = ({submit}) => {
 
 				<StyledLabel for="PW">Password : </StyledLabel>
 				<StyledInput type="password" name="PW" onChange={e => setFormState({...formState, password : e.target.value})}></StyledInput>
-				<StyledError>{errorMessage}</StyledError>
+				{errMsg}
 				<StyledSubmit type="submit" name="Submit">Sign in</StyledSubmit>
 			</StyledForm>
 		</div>
 	);
 };
-
-
-
 
 
 const StyledTitle = styled.h2`

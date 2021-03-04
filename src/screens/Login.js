@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Signin from '../components/Signin';
 import NavBar from "../components/NavBar";
 import axios from 'axios';
@@ -27,16 +27,23 @@ const submit = (evenement,formState,setErrorMessage,history) => {
 		console.log ("x-access-token : ", res.headers['x-access-token']); */
 		localStorage.setItem('token', res.headers['x-access-token']);
 		/* Redirige le user vers la page Characters */
-		history.push('/Characters')
+		history.push('/Home')
 	}).catch(err => {
 		setErrorMessage("une erreur est survenue, veuillez réessayer plus tard.")
 	})
 }
 
-const Login = () => {
+const Login = ({history}) => {
+	useEffect(()=>{
+		const token = localStorage.getItem('token');
+		console.log('Login token -> ', token);
+		if (token){
+			history.push('/')
+		}
+	},[])
+	
 	return (
 		<div>
-			<NavBar/>
 			<Signin submit={submit}/>
 		</div>
 	);

@@ -4,21 +4,27 @@ import {
 	Switch,
 	Route,
 	Redirect,
-  } from "react-router-dom";
+} from "react-router-dom";
 
-  import Login from "../screens/Login"
-  import Characters from "../screens/Characters"
-  import Details from "../screens/Details"
+import NavBar from "../components/NavBar"
+
+import Home from "../screens/Home"
+import Login from "../screens/Login"
+import Details from "../screens/Details"
+import Characters from "../screens/Characters"
+import PrivateRoute from "../utils/privateRoute"
 
   const Routes = () => {
 	  return (
 		  <Router>
+			  <NavBar/>
 			  <Switch>
+			  <Route exact path="/" component = {Home}/>
 			  <Route exact path="/Login" component = {Login}/>
-			  <Route exact path="/Characters" component = {Characters}/>
-			  <Route exact path="/Details" component = {Details}/>
+			  <PrivateRoute exact path="/Characters" component = {Characters}/>
+			  <PrivateRoute exact path="/Details" component = {Details}/>
 
-				<Redirect to="Login"/>
+				<Redirect to="/"/>
 
 			  </Switch>
 		  </Router>
