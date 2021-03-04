@@ -1,19 +1,26 @@
 html {
   text-align: center;
-  background-color: rgba(255, 0, 0, 0.5);
+  background-image: url(./resources/Avengers.jfif);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: 75px;
+  height : 100%;
   color: white;
 }
 
 .navbar {
-  margin-bottom: 30px;
+  height:25px;
+  background-color: #a00;
+
 }
 .navbar > a {
   margin-left: 15px ;
   margin-right: 15px;
+  text-decoration: none;
 }
 
 .navbar > a:visited {
-  color: white
+  color: white;
 }
 
 .App-logo {
@@ -21,7 +28,6 @@ html {
   pointer-events: none;
   position: relative;
   position: center;
-  opacity:0.8;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -37,6 +43,7 @@ html {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  background-color: red;
 }
 
 .App-link {
