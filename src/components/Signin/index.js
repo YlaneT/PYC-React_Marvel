@@ -38,8 +38,7 @@ const Form = () => {
 				url:'https://easy-login-api.herokuapp.com/users/login',
 				data: {
 					username: formState.username,
-					password: formState.
-password
+					password: formState.password
 			}
 		}).then(res => {
 			console.log (res);
