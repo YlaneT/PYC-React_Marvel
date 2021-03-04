@@ -1,66 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
-import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 
-const Form = () => {
-	const [formState, setFormState] = useState({username: '', password: ''})
-	const [errorMessage, setErrorMessage] = useState('')
-
-	// attention, si on n'utilise pas le spread Operator, on ne printera récupérera que le dernier champ modifié.
+const Form = ({submit}) => {
+	const [formState,setFormState] = useState({username:'',password:''});
+	const [errorMessage,setErrorMessage] = useState('');
+	// attention, si on n'utilise pas le spread Operator, on ne récupérera que le dernier champ modifié.
 	useEffect(()=> { console.log("formstate : ", formState)})
 
 	/* Hook permettant d'avoir accès à l'objet history de props même en dehors d'une page gérée par le router */
 	const history = useHistory();
 
-	/*	SUBMIT A L'ANCIENNE AVEC LES EVENEMENTS
-	/*	console.log(evenement.target);
-	//	Print le code HTML du form dans la console
-	//	Ancienne méthode contraignante et pas dynamique
-	
-	
-	/* console.log(evenement.target.UN.value);
-	console.log(evenement.target.PW.value);
-	//	V2 aussi très contraignante
-	*/
-
-	/* Submit version React	*/
-	const submit = evenement => {
-		
-		console.log("history : ", history);
-
-		// prévient JS de ne pas utiliser le comportement de base, à savoir raffraichir la page
-		evenement.preventDefault();
-
-		if (!formState.username || !formState.password) {
-			// Si à la validation, il manque le username ou password
-			setErrorMessage("Les champs ne doivent pas être vides");
-			return;
-		}
-
-		axios({
-				method: "POST",
-				url:'https://easy-login-api.herokuapp.com/users/login',
-				data: {
-					username: formState.username,
-					password: formState.password
-			}
-		}).then(res => {
-			/* console.log ("resultat : ", res);
-			console.log ("headers : ", res.headers);
-			console.log ("x-access-token : ", res.headers['x-access-token']); */
-			localStorage.setItem('token', res.headers['x-access-token']);
-			/* Redirige le user vers la page Characters */
-			history.push('/Characters')
-		}).catch(err => {
-			setErrorMessage("une erreur est survenue, veuillez réessayer plus tard.")
-		})
-	}
-
 	return (
 		<div>
 			<StyledTitle>Authentication form</StyledTitle>
-			<StyledForm onSubmit={submit} >
+			<StyledForm onSubmit={ e=>submit (e, formState, setErrorMessage,history)} >
 			{/* if qui vérifie si les deux champs sont remplis*/}
 				<StyledLabel for="UN">Username : </StyledLabel>
 			
