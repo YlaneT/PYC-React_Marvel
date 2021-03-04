@@ -7,20 +7,24 @@ html {
   height : 100%;
 }
 
+
 .navbar {
-  height:25px;
+  height:35px;
   background-color: #a00;
   color: white;
+  font-size: 25px;
 }
-.navbar > a {
+
+.navbar a {
   margin-left: 15px ;
   margin-right: 15px;
   text-decoration: none;
+  font-weight: bold;
 }
-
 .navbar > a:visited {
   color: white;
 }
+
 
 .App-logo {
   height: 80%;

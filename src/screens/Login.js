@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import Signin from '../components/Signin';
-import NavBar from "../components/NavBar";
 import axios from 'axios';
 
 const submit = (evenement,formState,setErrorMessage,history) => {
@@ -22,13 +21,12 @@ const submit = (evenement,formState,setErrorMessage,history) => {
 				password: formState.password
 		}
 	}).then(res => {
-		/* console.log ("resultat : ", res);
-		console.log ("headers : ", res.headers);
-		console.log ("x-access-token : ", res.headers['x-access-token']); */
 		localStorage.setItem('token', res.headers['x-access-token']);
 		/* Redirige le user vers la page Characters */
 		history.push('/Home')
+		window.location.reload();
 	}).catch(err => {
+		console.log(err);
 		setErrorMessage("une erreur est survenue, veuillez réessayer plus tard.")
 	})
 }
@@ -40,7 +38,7 @@ const Login = ({history}) => {
 		if (token){
 			history.push('/')
 		}
-	},[])
+	},[history])
 	
 	return (
 		<div>
